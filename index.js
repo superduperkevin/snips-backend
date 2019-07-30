@@ -1,9 +1,13 @@
-const Snippet = require('./models/Snippet.model');
+const express = require('express');
+const router = require('./middleware/router');
+const logger = require('./middleware/logger');
 
-async function testModels() {
-  const snippets = await Snippet.select({
-    id: '1',
-  });
-}
+const app = express();
 
-testModels();
+app.use(express.json()); // parses reqs with json payloads
+app.use(logger);
+app.use(router);
+
+app.listen(6969, () => {
+  console.log('Snips server running on port 6969');
+});

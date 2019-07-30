@@ -1,0 +1,26 @@
+{
+  "name": "snips-backend",
+  "version": "1.0.0",
+  "description": "Backend for Snips App. Built with MVC architecture and file-based DB.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superduperkevin/snips-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/superduperkevin/snips-backend/issues"
+  },
+  "homepage": "https://github.com/superduperkevin/snips-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1",
+    "shortid": "^2.2.14"
+  }
+}
