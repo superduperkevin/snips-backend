@@ -8,6 +8,6 @@ app.use(express.json()); // parses reqs with json payloads
 app.use(logger);
 app.use(router);
 
-app.listen(6969, () => {
+app.listen(process.env.PORT || 6969, () => {
   console.log('Snips server running on port 6969');
 });
