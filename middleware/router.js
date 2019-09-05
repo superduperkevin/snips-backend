@@ -20,18 +20,10 @@ router.get('/api', (request, response) => {
 //    response.send(snippets)
 // );
 
-router.get('/api/snippets', snippets.getSnippets);
-
-router.get('/api/snippets/:id', snippets.getSnippetsById);
-
-router.patch('/api/snippets/:id', (request, response) => {
-  response.send('Patch one');
-});
-
 router.post('/api/snippets', snippets.createSnippet);
-
-router.delete('/api/snippets/:id', (request, response) => {
-  response.send('Delete one');
-});
+router.get('/api/snippets', snippets.getAllSnippets);
+router.get('/api/snippets/:id', snippets.getSnippetById);
+router.patch('/api/snippets/:id', snippets.updateSnipById);
+router.delete('/api/snippets/:id', snippets.deleteSnipById);
 
 module.exports = router;

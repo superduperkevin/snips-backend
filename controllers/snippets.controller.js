@@ -1,29 +1,52 @@
 const Snippet = require('../models/Snippet.model');
 const ErrorWithHttpStatus = require('../utils/ErrorWithHttpStatus');
 
-exports.createSnippet = async (request, response) => {
-  // 1. get data from Snippets model
-  const snippet = await Snippet.select();
-  // 2. send that out
-  return response.send(snippet);
-};
-exports.getSnippets = async (request, response) => {
-  const snippets = await Snippet.select();
-  return response.send(snippets);
-};
-
-exports.getSnippetsById = async (request, response) => {
+exports.createSnippet = async (request, response, next) => {
+  // console.log(request.body);
   try {
-    const { id } = request.params;
-    // get the snippet: call Snippet.select passing an id (from request.params)
-    const snippet = await Snippet.select({ id });
-
-    if (snippet.length === 0) {
-      throw new ErrorWithHttpStatus('Invalid ID', 404);
-    }
-    // send that snippet back
-    // response.send(snippets[id]);
+    const newSnippet = await Snippet.insert(request.body);
+    response.status(201).send(newSnippet);
   } catch (err) {
-    if (err instanceof ErrorWithHttpStatus) response.status(404).send(err.message);
+    next(err);
+  }
+};
+
+exports.getAllSnippets = async ({ query }, response, next) => {
+  try {
+    const snippets = await Snippet.select(query);
+    return response.send(snippets);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getSnippetById = async ({ params: { id } }, response, next) => {
+  try {
+    // console.log(id);
+    const snippet = await Snippet.select({ id });
+    if (!snippet.length) {
+      throw new ErrorWithHttpStatus('ID does not exist', 404);
+    }
+    response.send(snippet[0]);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.updateSnipById = async (request, response, next) => {
+  try {
+    const updatedSnip = await Snippet.update(request.params, request.body);
+    response.send(updatedSnip);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteSnipById = async ({ params: { id } }, response, next) => {
+  try {
+    await Snippet.delete({ id });
+    response.send(`Snippet "${id}" deleted successfully`);
+  } catch (err) {
+    next(err);
   }
 };
